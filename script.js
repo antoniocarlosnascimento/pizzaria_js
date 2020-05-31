@@ -1,3 +1,5 @@
+let carrinho = [];
+let modalKey = 0;
 let modalQuantidade = 1;
 const c = (el) => document.querySelector(el);
 const cs = (el) => document.querySelectorAll(el);
@@ -21,6 +23,7 @@ pizzaJson.map((item, index) => {
     // closest -> busque pele elemento mais proximo tanto abaixo quanto acima do elemento
     let key = event.target.closest(".pizza-item").getAttribute("data-key");
     modalQuantidade = 1;
+    modalKey = key;
 
     c(".pizzaBig img").src = pizzaJson[key].img;
     c(".pizzaInfo h1").innerHTML = pizzaJson[key].name;
@@ -76,4 +79,18 @@ cs(".pizzaInfo--size").forEach((size, sizeIndex) => {
     c(".pizzaInfo--size.selected").classList.remove("selected");
     size.classList.add("selected");
   });
+});
+
+// Add carrinho modal
+c(".pizzaInfo--addButton").addEventListener("click", () => {
+  let sizePizza = parseInt(
+    c(".pizzaInfo--size.selected").getAttribute("data-key")
+  );
+
+  carrinho.push({
+    id: pizzaJson[modalKey].id,
+    sizePizza,
+    quantidade: modalQuantidade,
+  });
+  closeModal();
 });
