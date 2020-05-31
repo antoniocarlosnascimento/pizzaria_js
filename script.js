@@ -108,8 +108,14 @@ function updateCarrinho() {
   if (carrinho.length > 0) {
     c("aside").classList.add("show");
     c(".cart").innerHTML = "";
+
+    let subTotal = 0;
+    let desconto = 0;
+    let total = 0;
+
     for (let i in carrinho) {
       let pizzaItem = pizzaJson.find((item) => item.id === carrinho[i].id); //find - retorna o item encontrado com seus valores
+      subTotal += pizzaItem.price * carrinho[i].quantidade;
       let carrinhoItem = c(".models .cart--item").cloneNode(true);
       let pizzaSizeName;
       switch (carrinho[i].sizePizza) {
@@ -128,8 +134,28 @@ function updateCarrinho() {
       carrinhoItem.querySelector(".cart--item-nome").innerHTML = pizzaName;
       carrinhoItem.querySelector(".cart--item--qt").innerHTML =
         carrinho[i].quantidade;
+      carrinhoItem
+        .querySelector(".cart--item-qtmenos")
+        .addEventListener("click", () => {
+          if (carrinho[i].quantidade > 1) carrinho[i].quantidade--;
+          else carrinho.splice(i, 1); //remove o item index 1, quantidade a ser removido após o index já contando com a index
+          updateCarrinho();
+        });
+      carrinhoItem
+        .querySelector(".cart--item-qtmais")
+        .addEventListener("click", () => {
+          carrinho[i].quantidade++;
+          updateCarrinho();
+        });
 
       c(".cart").append(carrinhoItem);
     }
+
+    desconto = subTotal * 0.1;
+    total = subTotal - desconto;
+
+    c(".subtotal span:last-child").innerHTML = `R$ ${subTotal.toFixed(2)}`;
+    c(".desconto span:last-child").innerHTML = `R$ ${desconto.toFixed(2)}`;
+    c(".total span:last-child").innerHTML = `R$ ${total.toFixed(2)}`;
   } else c("aside").classList.remove("show");
 }
