@@ -86,11 +86,19 @@ c(".pizzaInfo--addButton").addEventListener("click", () => {
   let sizePizza = parseInt(
     c(".pizzaInfo--size.selected").getAttribute("data-key")
   );
+  let identifier = `${pizzaJson[modalKey].id}@${sizePizza}`;
+  let key = carrinho.findIndex((item) => item.identifier === identifier); //findIndex -> retorna a index do primeiro item encontrado e caso não encontre retorna -1(false)
 
-  carrinho.push({
-    id: pizzaJson[modalKey].id,
-    sizePizza,
-    quantidade: modalQuantidade,
-  });
+  if (key > -1) {
+    carrinho[key].quantidade += modalQuantidade;
+  } else {
+    carrinho.push({
+      identifier,
+      id: pizzaJson[modalKey].id,
+      sizePizza,
+      quantidade: modalQuantidade,
+    });
+  }
+
   closeModal();
 });
