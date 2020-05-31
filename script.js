@@ -107,10 +107,29 @@ c(".pizzaInfo--addButton").addEventListener("click", () => {
 function updateCarrinho() {
   if (carrinho.length > 0) {
     c("aside").classList.add("show");
+    c(".cart").innerHTML = "";
     for (let i in carrinho) {
       let pizzaItem = pizzaJson.find((item) => item.id === carrinho[i].id); //find - retorna o item encontrado com seus valores
+      let carrinhoItem = c(".models .cart--item").cloneNode(true);
+      let pizzaSizeName;
+      switch (carrinho[i].sizePizza) {
+        case 0:
+          pizzaSizeName = "P";
+          break;
+        case 1:
+          pizzaSizeName = "M";
+          break;
+        case 2:
+          pizzaSizeName = "G";
+          break;
+      }
+      let pizzaName = `${pizzaItem.name} (${pizzaSizeName})`;
+      carrinhoItem.querySelector("img").src = pizzaItem.img;
+      carrinhoItem.querySelector(".cart--item-nome").innerHTML = pizzaName;
+      carrinhoItem.querySelector(".cart--item--qt").innerHTML =
+        carrinho[i].quantidade;
 
-      console.log(pizzaItem);
+      c(".cart").append(carrinhoItem);
     }
   } else c("aside").classList.remove("show");
 }
