@@ -58,3 +58,22 @@ function closeModal() {
 cs(
   ".pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton"
 ).forEach((botaoCancela) => botaoCancela.addEventListener("click", closeModal));
+
+c(".pizzaInfo--qtmenos").addEventListener("click", () => {
+  if (modalQuantidade > 1) {
+    modalQuantidade--;
+    c(".pizzaInfo--qt").innerHTML = modalQuantidade;
+  }
+});
+
+c(".pizzaInfo--qtmais").addEventListener("click", () => {
+  modalQuantidade++;
+  c(".pizzaInfo--qt").innerHTML = modalQuantidade;
+});
+
+cs(".pizzaInfo--size").forEach((size, sizeIndex) => {
+  size.addEventListener("click", (event) => {
+    c(".pizzaInfo--size.selected").classList.remove("selected");
+    size.classList.add("selected");
+  });
+});
