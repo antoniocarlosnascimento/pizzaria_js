@@ -81,11 +81,12 @@ cs(".pizzaInfo--size").forEach((size, sizeIndex) => {
   });
 });
 
-// Add carrinho modal
+// Carrinho modal
 c(".pizzaInfo--addButton").addEventListener("click", () => {
   let sizePizza = parseInt(
     c(".pizzaInfo--size.selected").getAttribute("data-key")
   );
+
   let identifier = `${pizzaJson[modalKey].id}@${sizePizza}`;
   let key = carrinho.findIndex((item) => item.identifier === identifier); //findIndex -> retorna a index do primeiro item encontrado e caso não encontre retorna -1(false)
 
@@ -104,7 +105,21 @@ c(".pizzaInfo--addButton").addEventListener("click", () => {
   closeModal();
 });
 
+c(".menu-openner").addEventListener("click", () => {
+  if (carrinho.length > 0) c("aside").style.left = 0;
+});
+
+c(".menu-closer").addEventListener(
+  "click",
+  () => (c("aside").style.left = "100vw")
+);
+c(".menu-closer").addEventListener(
+  "click",
+  () => (c("aside").style.left = "100vw")
+);
+
 function updateCarrinho() {
+  c(".menu-openner span").innerHTML = carrinho.length;
   if (carrinho.length > 0) {
     c("aside").classList.add("show");
     c(".cart").innerHTML = "";
@@ -157,5 +172,8 @@ function updateCarrinho() {
     c(".subtotal span:last-child").innerHTML = `R$ ${subTotal.toFixed(2)}`;
     c(".desconto span:last-child").innerHTML = `R$ ${desconto.toFixed(2)}`;
     c(".total span:last-child").innerHTML = `R$ ${total.toFixed(2)}`;
-  } else c("aside").classList.remove("show");
+  } else {
+    c("aside").classList.remove("show");
+    c("aside").style.left = "100vw";
+  }
 }
