@@ -5,6 +5,7 @@ const cs = (el) => document.querySelectorAll(el);
 pizzaJson.map((item, index) => {
   let pizzaItem = c(".models .pizza-item").cloneNode(true);
 
+  pizzaItem.setAttribute("data-key", index);
   pizzaItem.querySelector(".pizza-item--img img").src = item.img;
   pizzaItem.querySelector(
     ".pizza-item--price"
@@ -14,6 +15,13 @@ pizzaJson.map((item, index) => {
 
   pizzaItem.querySelector("a").addEventListener("click", (event) => {
     event.preventDefault();
+
+    // closest -> busque pele elemento mais proximo tanto abaixo quanto acima do elemento
+    let key = event.target.closest(".pizza-item").getAttribute("data-key");
+
+    c(".pizzaBig img").src = pizzaJson[key].img;
+    c(".pizzaInfo h1").innerHTML = pizzaJson[key].name;
+    c(".pizzaInfo--desc").innerHTML = pizzaJson[key].description;
 
     c(".pizzaWindowArea").style.opacity = 0;
     c(".pizzaWindowArea").style.display = "flex";
