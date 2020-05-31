@@ -100,5 +100,17 @@ c(".pizzaInfo--addButton").addEventListener("click", () => {
     });
   }
 
+  updateCarrinho();
   closeModal();
 });
+
+function updateCarrinho() {
+  if (carrinho.length > 0) {
+    c("aside").classList.add("show");
+    for (let i in carrinho) {
+      let pizzaItem = pizzaJson.find((item) => item.id === carrinho[i].id); //find - retorna o item encontrado com seus valores
+
+      console.log(pizzaItem);
+    }
+  } else c("aside").classList.remove("show");
+}
